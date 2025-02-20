@@ -16,26 +16,21 @@ public class DbTest1 {
 			// 1) JDBC 업체가 제공하는 Driver 파일 로딩
 			Class.forName("org.mariadb.jdbc.Driver");
 			
-		} catch (Exception e) {
-			System.out.println("로딩 실패 : " + e.getMessage());
-			return;
-		}
-		
-		try {
 			// 2) DB 서버와 연결
-			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/test", "root", "123"); // DriverManager로 Connection 객체를 얻는다.
-		} catch (Exception e) {
-			System.out.println("연결 실패 : " + e.getMessage());
-			return;
-		}
-		
-		try {
+			conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/test", "****", "*********"); // DriverManager로 Connection 객체를 얻는다.
+			// 실질적인 연결은 Drivermanager가 담당 Connection객체는 연결 정보를 저장
+			// 연결 관련 정보는 암호화해서 별도 파일로 저장!
+
 			// 3) SQL문 실행 : select로 자료 읽기
 			stmt = conn.createStatement(); // Connection 객체 기반으로 Statement 객체 생성
+			
+			
+			// 쿼리문으로 데이터를 구하는 부분은 메소드를 따로 작성
 //			String sql = "select * from sangdata;";
 			String sql = "select code, sang, su, dan as 단가 from sangdata;";
 			rs = stmt.executeQuery(sql); // Statement 객체가 DB에 요청해 결과를 ResultSet에 저장
 //			rs.next(); // record pointer 이동 명령 - pointer가 가리키고 있는 레코드만 참조가능
+			// int count = 0; // 이런 식으로 DB에 접근하지 않고 레코드 수를 구할 수 있다.
 			while(rs.next()) { // 자료가 있는 동안 반복
 				String code = rs.getString("code");
 				String sangpum = rs.getString("sang");
