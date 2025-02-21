@@ -38,8 +38,6 @@ public class dbTest7Ex {
 					properties.getProperty("passwd")
 			);
 			
-			Scanner scanner = new Scanner(System.in);
-			
 			String sql = "select jikwonname as 직원명, busername as 부서명, buserloc as 근무지역, jikwonjik as 직급, gogekname as 고객명, gogektel as 고객전화,";
 			sql = sql.concat(" timestampdiff(year, str_to_date(substr(gogekjumin, 1, 6), '%y%m%d'), now()) as 나이 from jikwon");
 			sql = sql.concat(" left join buser on buserno = busernum");
@@ -47,6 +45,8 @@ public class dbTest7Ex {
 			sql = sql.concat(" where busername = (select busername from jikwon left join buser on buserno = busernum where jikwonno = ? and jikwonname = ?)");
 			
 			pstmt = conn.prepareStatement(sql);
+			
+			Scanner scanner = new Scanner(System.in);
 			
 			System.out.print("직원 번호 : ");
 			String jikwonno = scanner.next();
@@ -56,20 +56,22 @@ public class dbTest7Ex {
 			String jikwonname = scanner.next();
 			pstmt.setString(2, jikwonname);
 			
+			scanner.close();
+			
 			rs = pstmt.executeQuery();
 			if(!rs.next()) {
 				System.out.println("작업 종료");
 				System.exit(0);
 			}
 			
-			System.out.println("직원명\t부서명\t근무지역\t직급\t고객명\t고객전화\t고객나이");
+			System.out.println("직원명\t부서명\t근무지역\t직급\t고객명\t고객전화\t\t고객나이");
 			System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4) + "\t" + rs.getString(5) + "\t" + rs.getString(6) + "\t" + rs.getString(7));
 			
 			while(rs.next()) {
 				System.out.println(rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getString(4) + "\t" + rs.getString(5) + "\t" + rs.getString(6) + "\t" + rs.getString(7));
 			}
 			
-			sql = "select round(avg(nvl(jikwonpay, 0)), 1) from jikwon";
+			sql = "select busername, round(avg(nvl(jikwonpay, 0)), 1) from jikwon";
 			sql = sql.concat(" left join buser on buserno = busernum");
 			sql = sql.concat(" where busername = (select busername from jikwon left join buser on buserno = busernum where jikwonno = ? and jikwonname = ?)");
 			pstmt = conn.prepareStatement(sql);
@@ -78,10 +80,9 @@ public class dbTest7Ex {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				System.out.println(rs.getString(1));
+				System.out.println(rs.getString(1) + " 연봉 평균 : " + rs.getString(2));
 			}
 			
-			scanner.close();
 		} catch (Exception e) {
 			System.out.println("showJikwon err : " + e);
 		} finally {

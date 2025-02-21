@@ -54,7 +54,7 @@ public class dbTest6Ex {
 			
 			rs = pstmt.executeQuery();
 			
-			System.out.println("직원번호" + "\t" + "직원명" + "\t" + "부서명" + "\t직급\t성별");
+			System.out.println("직원번호\t직원명\t부서명\t직급\t성별");
 			
 			int count = 0;
 			while(rs.next()) {
