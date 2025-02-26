@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+div b#hi{
+	font-size: 40px;
+}
+
+div b.hello{
+	font-size: 40px;
+	color: yellow;
+}
+
+i, strong{
+	color:rgb(0%, 0%, 90%);
+}
+
+
+div#sajin{
+	height: 150px;
+	background-image: url("../images/1.jpg");
+}
+
+img{
+	border: 5px dotted red;
+}
