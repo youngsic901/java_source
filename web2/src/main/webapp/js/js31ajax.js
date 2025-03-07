@@ -1,6 +1,6 @@
 window.onload = function(){
     document.getElementById("btnOk1").onclick = function(){
-        startFunc();
+        startFunc(); // onclick 이벤트에서 파라미터를 받고 싶으면 이렇게
     }
     document.getElementById("btnOk2").onclick = startXml;
     document.getElementById("btnOk3").onclick = startJson;
